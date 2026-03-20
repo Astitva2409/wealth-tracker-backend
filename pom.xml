@@ -15,7 +15,7 @@
 	<groupId>com.wealthtracker</groupId>
 	<artifactId>wealth-tracker-app</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<n>wealth-tracker-app</n>
+	<name>wealth-tracker-app</name>
 	<description>Portfolio Management Backend — Spring Boot + PostgreSQL + JWT</description>
 
 	<properties>
