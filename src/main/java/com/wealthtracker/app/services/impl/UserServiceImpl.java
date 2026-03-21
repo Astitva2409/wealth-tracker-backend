@@ -1,4 +1,4 @@
-package com.wealthtracker.app.services.Impl;
+package com.wealthtracker.app.services.impl;
 
 import com.wealthtracker.app.entities.User;
 import com.wealthtracker.app.exception.ResourceNotFoundException;
