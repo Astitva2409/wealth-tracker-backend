@@ -4,6 +4,8 @@ import com.wealthtracker.app.dto.TransactionDto;
 import com.wealthtracker.app.dto.TransactionRequestDto;
 import com.wealthtracker.app.entities.User;
 import com.wealthtracker.app.services.TransactionService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -18,12 +20,14 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/transactions")
 @RequiredArgsConstructor
+@Tag(name = "Transactions", description = "Log and manage investment transactions")
 public class TransactionController {
 
     private final TransactionService transactionService;
 
     // POST /api/transactions
     @PostMapping
+    @Operation(summary = "Log a new SIP or lump-sum transaction")
     public ResponseEntity<TransactionDto> addTransaction(
             @RequestBody @Valid TransactionRequestDto transactionRequestDto,
             @AuthenticationPrincipal User currentUser) {
@@ -35,6 +39,7 @@ public class TransactionController {
     // GET /api/transactions
     // Returns all transactions for the logged-in user (no pagination)
     @GetMapping
+    @Operation(summary = "Get all transactions for logged-in user")
     public ResponseEntity<List<TransactionDto>> getAllTransactions(
             @AuthenticationPrincipal User currentUser) {
         List<TransactionDto> response = transactionService.getAllTransactions(currentUser);
@@ -45,6 +50,7 @@ public class TransactionController {
     // Paginated version — same pattern as Uber project's ride history
     // Query params: page (0-indexed), size (items per page), sort field + direction
     @GetMapping("/paginated")
+    @Operation(summary = "Get paginated transactions with sort options")
     public ResponseEntity<Page<TransactionDto>> getAllTransactionsPaginated(
             @AuthenticationPrincipal User currentUser,
             @RequestParam(defaultValue = "0") int page,
@@ -65,6 +71,7 @@ public class TransactionController {
 
     // DELETE /api/transactions/{transactionId}
     @DeleteMapping("/{transactionId}")
+    @Operation(summary = "Delete a transaction")
     public ResponseEntity<Void> deleteTransaction(
             @PathVariable Long transactionId,
             @AuthenticationPrincipal User currentUser) {
