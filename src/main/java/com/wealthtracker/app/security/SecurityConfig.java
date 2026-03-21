@@ -1,5 +1,6 @@
 package com.wealthtracker.app.security;
 
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -44,6 +45,15 @@ public class SecurityConfig {
                         .requestMatchers("/api/auth/**").permitAll()
                         // Everything else requires a valid JWT
                         .anyRequest().authenticated()
+                )
+                .exceptionHandling(ex -> ex
+                        .authenticationEntryPoint((request, response, authException) -> {
+                            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                            response.setContentType("application/json");
+                            response.getWriter().write(
+                                    "{\"error\":{\"status\":\"UNAUTHORIZED\",\"message\":\"Authentication required\"}}"
+                            );
+                        })
                 )
 
                 // Our JWT filter runs BEFORE Spring's default auth filter
