@@ -76,6 +76,7 @@ public class SecurityConfig {
                 "http://localhost:5173",  // Vite dev server
                 "http://localhost:3000"   // fallback
         ));
+        config.setAllowedOriginPatterns(List.of("*"));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);
