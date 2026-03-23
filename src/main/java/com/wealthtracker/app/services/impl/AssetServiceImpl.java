@@ -26,6 +26,7 @@ public class AssetServiceImpl implements AssetService {
         // Builder pattern — same as Uber project style
         Asset asset = Asset.builder()
                 .name(assetRequestDto.getName())
+                .symbol(assetRequestDto.getSymbol())
                 .assetType(assetRequestDto.getAssetType())
                 .purchasePrice(assetRequestDto.getPurchasePrice())
                 .currentPrice(assetRequestDto.getCurrentPrice())
