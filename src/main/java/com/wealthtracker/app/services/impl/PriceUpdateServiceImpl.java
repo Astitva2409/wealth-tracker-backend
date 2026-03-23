@@ -20,6 +20,7 @@ import java.util.Map;
 public class PriceUpdateServiceImpl implements PriceUpdateService {
 
     private final AssetRepository assetRepository;
+    private final Asset asset;
 
     // Injected from application.properties
     @Value("${alpha.vantage.api.key}")
@@ -93,6 +94,9 @@ public class PriceUpdateServiceImpl implements PriceUpdateService {
                     if (schemeName.contains(searchName) ||
                             searchName.contains(schemeName.substring(0, Math.min(schemeName.length(), 10)))) {
                         String navStr = parts[4].trim();
+                        Double nav = Double.parseDouble(navStr);
+                        Double units = asset.getPurchasePrice() / nav;
+                        Double currentPrice =  units * nav;
                         return Double.parseDouble(navStr);
                     }
                 }
