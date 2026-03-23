@@ -96,8 +96,7 @@ public class PriceUpdateServiceImpl implements PriceUpdateService {
                         String navStr = parts[4].trim();
                         Double nav = Double.parseDouble(navStr);
                         Double units = asset.getPurchasePrice() / nav;
-                        Double currentPrice =  units * nav;
-                        return Double.parseDouble(navStr);
+                        return units * nav;
                     }
                 }
             }
