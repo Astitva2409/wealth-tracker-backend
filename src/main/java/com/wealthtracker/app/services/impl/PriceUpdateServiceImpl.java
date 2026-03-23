@@ -26,8 +26,7 @@ public class PriceUpdateServiceImpl implements PriceUpdateService {
     private String alphaVantageApiKey;
 
     // RestTemplate — Spring's HTTP client for calling external APIs
-    // Like Axios on the frontend — makes GET/POST requests to URLs
-    private final RestTemplate restTemplate = new RestTemplate();
+    private final RestTemplate restTemplate;
 
     // ── Scheduled job ────────────────────────────────────────
     // Runs every day at 6 PM IST (12:30 UTC) on weekdays
