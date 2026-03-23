@@ -24,4 +24,6 @@ public class AssetRequestDto {
     private Double currentPrice;
 
     private String symbol;
+
+    private Double units;
 }

@@ -55,11 +55,19 @@ public class PriceUpdateServiceImpl implements PriceUpdateService {
                 }
 
                 if (newPrice != null && newPrice > 0) {
-                    asset.setCurrentPrice(newPrice);
-                    asset.setIsProfitable(newPrice >= asset.getPurchasePrice());
+                    // newPrice = current NAV per unit
+                    // currentValue = units × currentNAV
+                    if (asset.getUnits() != null && asset.getUnits() > 0) {
+                        double currentValue = asset.getUnits() * newPrice;
+                        asset.setCurrentPrice(currentValue);
+                        asset.setIsProfitable(currentValue >= asset.getPurchasePrice());
+                    } else {
+                        // no units stored — just update price directly (for stocks with price)
+                        asset.setCurrentPrice(newPrice);
+                        asset.setIsProfitable(newPrice >= asset.getPurchasePrice());
+                    }
                     assetRepository.save(asset);
                     updatedCount++;
-                    log.info("Updated {} → ₹{}", asset.getName(), newPrice);
                 }
             } catch (Exception e) {
                 log.error("Failed to update price for {}: {}", asset.getName(), e.getMessage());

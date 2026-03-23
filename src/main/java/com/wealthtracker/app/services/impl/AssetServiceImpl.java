@@ -31,6 +31,7 @@ public class AssetServiceImpl implements AssetService {
                 .purchasePrice(assetRequestDto.getPurchasePrice())
                 .currentPrice(assetRequestDto.getCurrentPrice())
                 .user(currentUser)
+                .units(assetRequestDto.getUnits())
                 .build();
 
         Asset savedAsset = assetRepository.save(asset);

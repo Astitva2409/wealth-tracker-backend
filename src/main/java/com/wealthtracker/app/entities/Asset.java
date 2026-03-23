@@ -57,6 +57,9 @@ public class Asset {
     @Column
     private String symbol;
 
+    @Column
+    private Double units;
+
     @CreationTimestamp
     private LocalDateTime createdAt;
 
