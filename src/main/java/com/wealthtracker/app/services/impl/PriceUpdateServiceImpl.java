@@ -36,7 +36,6 @@ public class PriceUpdateServiceImpl implements PriceUpdateService {
     @Override
     public void updateAllAssetPrices() {
         log.info("Starting scheduled price update...");
-
         List<Asset> allAssets = assetRepository.findAll();
         int updatedCount = 0;
 
@@ -45,29 +44,28 @@ public class PriceUpdateServiceImpl implements PriceUpdateService {
                 Double newPrice = null;
 
                 if (asset.getAssetType() == AssetType.MUTUAL_FUND) {
-                    // AMFI API for Mutual Fund NAV
+                    // AMFI uses fund name
                     newPrice = fetchMutualFundNAV(asset.getName());
                 } else {
-                    // Alpha Vantage for Stocks and ETFs
-                    newPrice = fetchStockOrETFPrice(asset.getName());
+                    // Alpha Vantage uses BSE symbol
+                    String ticker = asset.getSymbol() != null
+                            ? asset.getSymbol()
+                            : asset.getName();  // fallback to name if symbol not set
+                    newPrice = fetchStockOrETFPrice(ticker);
                 }
 
                 if (newPrice != null && newPrice > 0) {
                     asset.setCurrentPrice(newPrice);
-                    // Recompute isProfitable
                     asset.setIsProfitable(newPrice >= asset.getPurchasePrice());
                     assetRepository.save(asset);
                     updatedCount++;
                     log.info("Updated {} → ₹{}", asset.getName(), newPrice);
                 }
-
             } catch (Exception e) {
-                // Don't let one failed asset stop the entire job
                 log.error("Failed to update price for {}: {}", asset.getName(), e.getMessage());
             }
         }
-
-        log.info("Price update complete. Updated {}/{} assets.", updatedCount, allAssets.size());
+        log.info("Price update complete. {}/{} assets updated.", updatedCount, allAssets.size());
     }
 
     // ── AMFI API — Mutual Fund NAV ───────────────────────────

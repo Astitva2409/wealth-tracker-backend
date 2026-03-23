@@ -19,4 +19,6 @@ public class AssetDto {
     private Double gainLoss;
 
     private LocalDateTime createdAt;
+
+    private String symbol;
 }

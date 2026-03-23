@@ -22,4 +22,6 @@ public class AssetRequestDto {
     @NotNull(message = "Current price is required")
     @Positive(message = "Current price must be positive")
     private Double currentPrice;
+
+    private String symbol;
 }

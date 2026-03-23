@@ -54,6 +54,9 @@ public class Asset {
     @Builder.Default
     private Boolean isProfitable = false;
 
+    @Column
+    private String symbol;
+
     @CreationTimestamp
     private LocalDateTime createdAt;
 
