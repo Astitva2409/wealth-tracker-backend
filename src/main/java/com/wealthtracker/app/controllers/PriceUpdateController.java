@@ -24,9 +24,8 @@ public class PriceUpdateController {
                     "from AMFI (Mutual Funds) and Alpha Vantage (Stocks/ETFs) " +
                     "and updates currentPrice for all assets in the database."
     )
-    public ResponseEntity<String> triggerPriceUpdate() {
+    public void triggerPriceUpdate() {
         priceUpdateService.updateAllAssetPrices();
-        return ResponseEntity.ok("Price update triggered successfully");
     }
 
     // GET /api/prices/mutual-fund?name=Parag Parikh
@@ -36,11 +35,10 @@ public class PriceUpdateController {
             description = "Fetches the latest Net Asset Value (NAV) from AMFI India " +
                     "for the given mutual fund name. Uses partial name matching."
     )
-    public ResponseEntity<Double> getMutualFundPrice(
+    public Double getMutualFundPrice(
             @Parameter(description = "Mutual fund name or partial name e.g. 'Parag Parikh'")
             @RequestParam String name) {
-        Double nav = priceUpdateService.fetchMutualFundNAV(name);
-        return ResponseEntity.ok(nav);
+        return priceUpdateService.fetchMutualFundNAV(name);
     }
 
     // GET /api/prices/stock?symbol=HDFCBANK
@@ -50,10 +48,9 @@ public class PriceUpdateController {
             description = "Fetches the latest market price from Alpha Vantage API " +
                     "for the given stock/ETF symbol. Appends .BSE suffix for Indian stocks."
     )
-    public ResponseEntity<Double> getStockPrice(
+    public Double getStockPrice(
             @Parameter(description = "Stock or ETF symbol e.g. 'HDFCBANK' or 'NIFTYBEES'")
             @RequestParam String symbol) {
-        Double price = priceUpdateService.fetchStockOrETFPrice(symbol);
-        return ResponseEntity.ok(price);
+        return priceUpdateService.fetchStockOrETFPrice(symbol);
     }
 }
