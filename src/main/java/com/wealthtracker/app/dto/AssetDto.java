@@ -21,4 +21,5 @@ public class AssetDto {
     private LocalDateTime createdAt;
 
     private String symbol;
+    private Double units;
 }
