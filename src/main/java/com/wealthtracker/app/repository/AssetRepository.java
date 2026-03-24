@@ -17,4 +17,6 @@ public interface AssetRepository extends JpaRepository<Asset, Long> {
     // Find a specific asset only if it belongs to the requesting user
     // Prevents users from accessing other users' assets
     Optional<Asset> findByIdAndUser(Long id, User user);
+
+    Optional<Asset> findByNameAndUser(String name, User user);
 }

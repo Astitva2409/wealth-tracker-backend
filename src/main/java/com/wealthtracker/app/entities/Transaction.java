@@ -60,4 +60,10 @@ public class Transaction {
     // Auto-set when record is created in DB
     @CreationTimestamp
     private LocalDateTime createdAt;
+
+    @Column
+    private Double navAtPurchase;
+
+    @Column
+    private Double units;
 }

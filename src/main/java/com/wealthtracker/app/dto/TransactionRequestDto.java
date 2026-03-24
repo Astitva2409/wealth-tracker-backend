@@ -30,4 +30,6 @@ public class TransactionRequestDto {
 
     // Optional — no validation annotation needed
     private String notes;
+
+    private Double navAtPurchase;
 }

@@ -16,4 +16,7 @@ public class TransactionDto {
     private LocalDate transactionDate;
     private String notes;
     private LocalDateTime createdAt;
+
+    private Double navAtPurchase;
+    private Double units;
 }
